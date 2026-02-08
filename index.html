@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Will You Be My Valentine? 💕</title>
+
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+</head>
+
+<body class="valentine-bg">
+
+<!-- 🎵 BACKGROUND MUSIC -->
+<audio id="bgMusic" loop>
+    <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<section class="hero">
+    <div class="hearts-container" id="hearts"></div>
+
+    <h1>Will you be my Valentine, <span class="name">Bubba</span>? 💕</h1>
+    <div class="countdown" id="countdown"></div>
+
+    <div class="buttons">
+        <button class="btn-yes" id="yesBtn">Yes! ❤️</button>
+        <button class="btn-no" id="noBtn">No 😢</button>
+    </div>
+</section>
+
+<script>
+/* 🎵 MUSIC PLAY AFTER USER INTERACTION */
+const bgMusic = document.getElementById("bgMusic");
+
+function startMusic() {
+    if (bgMusic.paused) {
+        bgMusic.volume = 0;
+        bgMusic.play().catch(() => {});
+        let v = 0;
+        const fade = setInterval(() => {
+            v += 0.05;
+            bgMusic.volume = Math.min(v, 0.4);
+            if (v >= 0.4) clearInterval(fade);
+        }, 200);
+    }
+}
+document.addEventListener("click", startMusic, { once: true });
+
+function isValentinesDay() {
+    const now = new Date();
+    const year = now.getFullYear();
+    const valentine = new Date(`February 8, ${year} 00:00:00`);
+    return now >= valentine;
+}
+
+function lockButtons() {
+    yesBtn.disabled = true;
+    noBtn.disabled = true;
+    yesBtn.classList.add("locked");
+    noBtn.classList.add("locked");
+    yesBtn.textContent = "Locked 🔒";
+    noBtn.textContent = "Not Yet 💔";
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    if (!isValentinesDay()) lockButtons();
+});
+
+const yesBtn = document.getElementById("yesBtn");
+const noBtn = document.getElementById("noBtn");
+const heartsContainer = document.getElementById("hearts");
+const countdownEl = document.getElementById("countdown");
+let noClicks = 0;
+
+/* Floating hearts */
+for (let i = 0; i < 30; i++) {
+    const heart = document.createElement("div");
+    heart.className = "heart";
+    heart.innerHTML = ["💖","💕","💗","💝"][Math.floor(Math.random()*4)];
+    heart.style.left = Math.random() * 100 + "%";
+    heart.style.animationDuration = (Math.random()*3 + 3) + "s";
+    heart.style.animationDelay = Math.random() * 2 + "s";
+    heartsContainer.appendChild(heart);
+}
+
+/* Countdown */
+setInterval(() => {
+    const now = new Date();
+    let year = now.getFullYear();
+    let valentine = new Date(`February 14, ${year} 00:00:00`);
+    if (valentine < now) year++;
+    valentine = new Date(`February 14, ${year} 00:00:00`);
+    const diff = valentine - now;
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    countdownEl.textContent = `${days} days to our special day! 🌹`;
+}, 1000);
+
+/* YES */
+yesBtn.addEventListener("click", () => {
+    if (!isValentinesDay()) return;
+    for (let i = 0; i < 8; i++) {
+        setTimeout(() => confetti({ particleCount: 150, spread: 90 }), i * 200);
+    }
+    setTimeout(() => {
+        window.location.href = "yes-celebration.html";
+    }, 2000);
+});
+
+/* NO */
+noBtn.addEventListener("click", () => {
+    if (!isValentinesDay()) return;
+
+    noClicks++;
+    yesBtn.style.transform = `scale(${1 + noClicks * 0.15})`;
+    noBtn.style.opacity = Math.max(1 - noClicks * 0.12, 0);
+    if (noClicks >= 8) noBtn.style.display = "none";
+
+    const phrases = [
+        " Yes! ❤️"," Please? 🥺💕"," I Love You 💖",
+        " Be Mine 💍"," Say Yes 😘"," DESTINY 🌟"
+    ];
+    yesBtn.textContent = phrases[Math.min(noClicks, phrases.length - 1)];
+    yesBtn.style.fontSize = `${1.6 + noClicks * 0.15}rem`;
+});
+</script>
+
+</body>
+</html>
