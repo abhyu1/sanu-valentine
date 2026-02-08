@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>You Said YES ❤️</title>
+
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+</head>
+
+<body class="celebration-bg">
+
+<!-- 🎵 BACKGROUND MUSIC CONTINUES -->
+<audio autoplay loop>
+    <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="nav-logo">💖</a>
+        <ul class="nav-menu">
+            <li><a href="love-letter.html" class="nav-link">Love Letter</a></li>
+            <li><a href="photos.html" class="nav-link">Photos</a></li>
+            <li><a href="song.html" class="nav-link">Our Song</a></li>
+        </ul>
+    </div>
+</nav>
+
+<div class="celebration-hero">
+    <div class="celebration-content">
+        <h1 class="celebration-title">SHE SAID YES 🎉</h1>
+        <h2 class="celebration-subtitle">Best Valentine ever ❤️</h2>
+
+        <div class="celebration-details">
+            <p>📅 Feb 14th, 9AM</p>
+            <p>📍 Koregaon Park</p>
+            <p>✨ Sanu + Abhy</p>
+        </div>
+
+        <div class="celebrate-buttons">
+            <a href="love-letter.html" class="celebrate-btn love-btn">💌 Love Letter</a>
+            <a href="photos.html" class="celebrate-btn photos-btn">📸 Photos</a>
+            <a href="song.html" class="celebrate-btn song-btn">🎵 Our Song</a>
+        </div>
+    </div>
+</div>
+
+<script>
+setInterval(() => {
+    confetti({ particleCount: 60, spread: 70 });
+}, 2000);
+</script>
+
+</body>
+</html>
