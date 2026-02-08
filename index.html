@@ -124,6 +124,26 @@ noBtn.addEventListener("click", () => {
     yesBtn.style.fontSize = `${1.6 + noClicks * 0.15}rem`;
 });
 </script>
+<script>
+const bgMusic = document.getElementById("bgMusic");
+
+// If user already allowed music earlier, play automatically
+if (localStorage.getItem("musicAllowed") === "yes") {
+    bgMusic.volume = 0.4;
+    bgMusic.play().catch(() => {});
+}
+
+// First user interaction unlocks audio
+function unlockMusic() {
+    bgMusic.volume = 0.4;
+    bgMusic.play().then(() => {
+        localStorage.setItem("musicAllowed", "yes");
+    }).catch(() => {});
+    document.removeEventListener("click", unlockMusic);
+}
+
+document.addEventListener("click", unlockMusic);
+</script>
 
 </body>
 </html>
